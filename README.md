@@ -20,5 +20,5 @@ Passing the `--from` and `--to` is a bit cumbersome so I recommend creating alia
 
 `alias pe="gotr --from=pl --to=en"`
 
-You can download binaries from here: <link>
+You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
 
