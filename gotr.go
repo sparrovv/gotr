@@ -26,7 +26,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		phrase, err := googletranslate.Translate("https://translate.google.com/translate_a/t", from, to, term)
+		phrase, err := googletranslate.Translate(from, to, term)
 		if err != nil {
 			panic(err)
 		}

@@ -10,6 +10,8 @@ import (
 	"strings"
 )
 
+const urlAddress = "https://translate.google.com/translate_a/t"
+
 type Phrase struct {
 	Translation   string   `json:"translation"`
 	ExtraMeanings []string `json:"extra_meanings"`
@@ -27,7 +29,11 @@ func (p Phrase) JsonResult() string {
 	return string(b)
 }
 
-func Translate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
+func Translate(from string, to string, term string) (phrase Phrase, err error) {
+  return OriginalTranslate(urlAddress, from, to, term)
+}
+
+func OriginalTranslate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
 	qparams := map[string]string{
 		"client":   "t",
 		"hl":       "en",
@@ -70,7 +76,7 @@ func Translate(urlAddress string, from string, to string, term string) (phrase P
 	if err != nil {
 		log.Fatal(err)
 	}
-	resp.Body.Close()
+	defer resp.Body.Close()
 
 	i1, i2 := getBracketIndexes(body)
 
