@@ -113,6 +113,6 @@ func getTranslation(response []byte, i1 []int, i2 []int) string {
 	pos1 := i1[2] + 1
 	pos2 := i2[0]
 
-	arry := strings.Split(strings.Replace(string(response[pos1:pos2]), "\"", "", -1), ",")
-	return arry[0]
+	arry := strings.Split(string(response[pos1:pos2]), "\",\"")
+	return strings.Replace(arry[0], "\"", "", -1)
 }
