@@ -46,9 +46,3 @@ func TestTranslateWithFullSentenceResponse(t *testing.T) {
 	assert.Equal(t, phrase.Translation, "Therefore, it is worth testing , because otherwise")
 	assert.Equal(t, len(phrase.ExtraMeanings), 0)
 }
-
-func TestResult(t *testing.T) {
-	phrase := Phrase{Translation: "Foo", ExtraMeanings: []string{"foo", "bar"}}
-
-	assert.Equal(t, phrase.Result(), "translation:\nFoo - foo, bar")
-}

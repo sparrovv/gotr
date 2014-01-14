@@ -1,7 +1,6 @@
 package googletranslate
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -17,20 +16,8 @@ type Phrase struct {
 	ExtraMeanings []string `json:"extra_meanings"`
 }
 
-func (p Phrase) Result() string {
-	return fmt.Sprintf("translation:\n%s - %v", p.Translation, strings.Join(p.ExtraMeanings, ", "))
-}
-
-func (p Phrase) JsonResult() string {
-	b, err := json.Marshal(p)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(b)
-}
-
 func Translate(from string, to string, term string) (phrase Phrase, err error) {
-  return OriginalTranslate(urlAddress, from, to, term)
+	return OriginalTranslate(urlAddress, from, to, term)
 }
 
 func OriginalTranslate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
