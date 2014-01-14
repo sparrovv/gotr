@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"regexp"
 	"strings"
 )
 
@@ -73,67 +72,47 @@ func Translate(urlAddress string, from string, to string, term string) (phrase P
 	}
 	resp.Body.Close()
 
-	sanitizedBody := sanitizeBody(body)
+	i1, i2 := getBracketIndexes(body)
 
-	var translateResponse []interface{}
-	err = json.Unmarshal(sanitizedBody, &translateResponse)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	phrase.Translation = getTranslation(translateResponse)
-	phrase.ExtraMeanings = getExtraMeanings(translateResponse)
+	phrase.Translation = getTranslation(body, i1, i2)
+	phrase.ExtraMeanings = getExtraMeanings(body, i1, i2)
 
 	return
 }
 
-// Get rid of invalid chars ",," or "[,"
-// Google translate response is not a JSON, but looks almost as it was.
-func sanitizeBody(body []byte) (sanitizedBody []byte) {
-	reg1, err := regexp.Compile(",{2,}")
-	if err != nil {
-		log.Fatal(err)
-	}
-	reg2, err := regexp.Compile(`\[,{1,}`)
-	if err != nil {
-		log.Fatal(err)
-	}
+func getBracketIndexes(response []byte) (i1 []int, i2 []int) {
+	var sep1 byte = 91 //[
+	var sep2 byte = 93 //]
 
-	sanitizedBody = reg1.ReplaceAll(body, []byte(","))
-	sanitizedBody = reg2.ReplaceAll(sanitizedBody, []byte(`[`))
-	return
-}
-
-func getExtraMeanings(foo []interface{}) (translations []string) {
-	secondArray := foo[1]
-	insideArray, ok := secondArray.([]interface{})
-	if ok {
-		fizArray := insideArray[0]
-		insideArray, ok := fizArray.([]interface{})
-		if ok {
-			bozArray := insideArray[1]
-			stringArray, ok := bozArray.([]interface{})
-			if ok {
-				for _, str := range stringArray {
-					translations = append(translations, str.(string))
-				}
-			}
+	for i, char := range response {
+		if char == sep1 {
+			i1 = append(i1, i)
+		}
+		if char == sep2 {
+			i2 = append(i2, i)
 		}
 	}
-
 	return
 }
 
-func getTranslation(foo []interface{}) (translation string) {
-	firstArray := foo[0]
-	insideArray, ok := firstArray.([]interface{})
-	if ok {
-		fiz := insideArray[0]
-		stringArray, ok := fiz.([]interface{})
-		if ok {
-			translation = stringArray[0].(string)
-		}
+func getExtraMeanings(response []byte, i1 []int, i2 []int) (translations []string) {
+	pos1 := i1[5] + 1
+	pos2 := i2[2]
+	tempStr := strings.Replace(string(response[pos1:pos2]), "\"", "", -1)
+
+	// this is a guard for a situation when someone want's to translate a sentence and there are no extra meanings
+	if len(tempStr) < 2 {
+		return
 	}
 
+	translations = strings.Split(tempStr, ",")
 	return
+}
+
+func getTranslation(response []byte, i1 []int, i2 []int) string {
+	pos1 := i1[2] + 1
+	pos2 := i2[0]
+
+	arry := strings.Split(strings.Replace(string(response[pos1:pos2]), "\"", "", -1), ",")
+	return arry[0]
 }
