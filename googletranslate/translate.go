@@ -55,7 +55,7 @@ func OriginalTranslate(urlAddress string, from string, to string, term string) (
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		err = fmt.Errorf("Error fetching assignments: [%v]", err)
+		err = fmt.Errorf("Error fetching translation: [%v]", err)
 		return
 	}
 
@@ -93,7 +93,7 @@ func getExtraMeanings(response []byte, i1 []int, i2 []int) (translations []strin
 	pos2 := i2[2]
 	tempStr := strings.Replace(string(response[pos1:pos2]), "\"", "", -1)
 
-	// this is a guard for a situation when someone want's to translate a sentence and there are no extra meanings
+	// this is a guard for a situation when someone wants to translate a sentence and there are no extra meanings
 	if len(tempStr) < 2 {
 		return
 	}
