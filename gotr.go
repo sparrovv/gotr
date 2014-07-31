@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/codegangsta/cli"
-	"github.com/sparrovv/gotr/googletranslate"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/codegangsta/cli"
+	"github.com/sparrovv/gotr/googletranslate"
 )
 
 func main() {
@@ -17,6 +18,7 @@ func main() {
 		cli.StringFlag{"from, f", "", "translate from"},
 		cli.StringFlag{"to, t", "", "translate to"},
 		cli.BoolFlag{"list, l", "list of languages"},
+		cli.BoolFlag{"speech, s", "download and execute run audio file"},
 	}
 	app.Action = func(c *cli.Context) {
 		from := strings.TrimSpace(c.String("from"))
@@ -39,8 +41,19 @@ func main() {
 			log.Fatal(err)
 			os.Exit(1)
 		}
+
 		fmt.Println(phrase.Translation)
 		fmt.Println(strings.Join(phrase.ExtraMeanings, ", "))
+
+		if c.Bool("speech") == true {
+			path := "/tmp/gotr.speech.file.mpg"
+			err := googletranslate.FetchSoundFile(to, phrase.Translation, path)
+			if err == nil {
+				fmt.Println("\nSpeech support on OSX:")
+				fmt.Println("afplay " + path)
+			}
+		}
+
 	}
 	app.Run(os.Args)
 }
