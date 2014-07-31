@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"net/http"
-	"net/url"
 	"strings"
 )
 
@@ -28,11 +26,12 @@ func Translate(from string, to string, term string) (phrase Phrase, err error) {
 		err = argError(to)
 		return
 	}
+
 	return OriginalTranslate(urlAddress, from, to, term)
 }
 
 func OriginalTranslate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
-	qparams := map[string]string{
+	params := map[string]string{
 		"client":   "t",
 		"hl":       "en",
 		"multires": "1",
@@ -45,26 +44,7 @@ func OriginalTranslate(urlAddress string, from string, to string, term string) (
 		"text":     term,
 	}
 
-	urlObj, err := url.Parse(urlAddress)
-	if err != nil {
-		log.Fatal(err)
-	}
-	v := url.Values{}
-
-	for key, value := range qparams {
-		v.Set(key, value)
-	}
-
-	urlObj.RawQuery = v.Encode()
-
-	req, err := http.NewRequest("GET", urlObj.String(), nil)
-	if err != nil {
-		return
-	}
-
-	req.Header.Add("User-Agent", "Mozilla/5.0")
-
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := runRquest(urlAddress, params)
 	if err != nil {
 		err = fmt.Errorf("Error fetching translation: [%v]", err)
 		return
