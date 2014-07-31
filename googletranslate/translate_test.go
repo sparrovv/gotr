@@ -46,3 +46,10 @@ func TestTranslateWithFullSentenceResponse(t *testing.T) {
 	assert.Equal(t, phrase.Translation, "Therefore, it is worth testing , because otherwise")
 	assert.Equal(t, len(phrase.ExtraMeanings), 0)
 }
+
+func TestTranslateWithWrongLangCode(t *testing.T) {
+	_, err := Translate("ende", "pl", "lay down")
+
+	assert.NotNil(t, err)
+	assert.Equal(t, "Unknown language code: ende. Check the list of available codes", err.Error())
+}

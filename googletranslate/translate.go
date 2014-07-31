@@ -17,6 +17,17 @@ type Phrase struct {
 }
 
 func Translate(from string, to string, term string) (phrase Phrase, err error) {
+	argError := func(code string) error {
+		return fmt.Errorf("Unknown language code: %v. Check the list of available codes", code)
+	}
+	if inLangList(from) == false {
+		err = argError(from)
+		return
+	}
+	if inLangList(to) == false {
+		err = argError(to)
+		return
+	}
 	return OriginalTranslate(urlAddress, from, to, term)
 }
 

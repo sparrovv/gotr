@@ -14,6 +14,11 @@ dwuznaczny
 dwuznaczny, wymijający, podejrzany
 ```
 
+To get a list of avaliable languages' codes run:
+```
+$ gotr --list
+```
+
 Passing the `--from` and `--to` is a bit cumbersome so I recommend creating aliases for your default languages:
 
 `alias ep="gotr --from=en --to=pl"`
