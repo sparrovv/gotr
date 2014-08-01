@@ -33,7 +33,7 @@ func TestTranslateWithSimpleResponse(t *testing.T) {
 	server := buildTestServer(googleTranslateResponse)
 	defer server.Close()
 
-	phrase, err := OriginalTranslate(server.URL, "en", "pl", "lay down")
+	phrase, err := translate(server.URL, "en", "pl", "lay down")
 
 	assert.NoError(t, err)
 	assert.Equal(t, phrase.ExtraMeanings, []string{"położyć", "kłaść", "pokłaść", "układać", "składać", "postawić", "zakładać", "narysować"})
@@ -48,7 +48,7 @@ func TestTranslateWithFullSentenceResponse(t *testing.T) {
 	server := buildTestServer(googleTranslateResponseWithSentence)
 	defer server.Close()
 
-	phrase, err := OriginalTranslate(server.URL, "pl", "en", "Dlatego też warto testować, bo inaczej")
+	phrase, err := translate(server.URL, "pl", "en", "Dlatego też warto testować, bo inaczej")
 
 	assert.NoError(t, err)
 	assert.Equal(t, phrase.Translation, "Therefore, it is worth testing , because otherwise")
@@ -63,7 +63,7 @@ func TestTranslateWithTheSameLanguage(t *testing.T) {
 	server := buildTestServer(sameLanguageResponse)
 	defer server.Close()
 
-	phrase, err := OriginalTranslate(server.URL, "en", "en", "elusive")
+	phrase, err := translate(server.URL, "en", "en", "elusive")
 
 	assert.NoError(t, err)
 	assert.Equal(t, phrase.Translation, "elusive")

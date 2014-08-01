@@ -27,10 +27,10 @@ func Translate(from string, to string, term string) (phrase Phrase, err error) {
 		return
 	}
 
-	return OriginalTranslate(urlAddress, from, to, term)
+	return translate(urlAddress, from, to, term)
 }
 
-func OriginalTranslate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
+func translate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
 	params := map[string]string{
 		"client":   "t",
 		"hl":       "en",
