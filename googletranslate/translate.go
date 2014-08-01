@@ -56,47 +56,32 @@ func OriginalTranslate(urlAddress string, from string, to string, term string) (
 	}
 	defer resp.Body.Close()
 
-	i1, i2 := getBracketIndexes(body)
-
-	phrase.Translation = getTranslation(body, i1, i2)
-	phrase.ExtraMeanings = getExtraMeanings(body, i1, i2)
+	phrase.Translation = getTranslation(string(body))
+	phrase.ExtraMeanings = getExtraMeanings(string(body))
 
 	return
 }
 
-func getBracketIndexes(response []byte) (i1 []int, i2 []int) {
-	var sep1 byte = 91 //[
-	var sep2 byte = 93 //]
-
-	for i, char := range response {
-		if char == sep1 {
-			i1 = append(i1, i)
-		}
-		if char == sep2 {
-			i2 = append(i2, i)
-		}
-	}
-	return
+func getTranslation(response string) string {
+	dirtyTranslation := strings.Split(response, "[[")[1]
+	return strings.Split(dirtyTranslation, "\"")[1]
 }
 
-func getExtraMeanings(response []byte, i1 []int, i2 []int) (translations []string) {
-	pos1 := i1[5] + 1
-	pos2 := i2[2]
-	tempStr := strings.Replace(string(response[pos1:pos2]), "\"", "", -1)
+func getExtraMeanings(response string) (extraMeanings []string) {
+	tempSplit := strings.Split(strings.Split(response, "[[")[2], "[")
 
-	// this is a guard for a situation when someone wants to translate a sentence and there are no extra meanings
-	if len(tempStr) < 2 {
+	if len(tempSplit) <= 1 {
 		return
 	}
 
-	translations = strings.Split(tempStr, ",")
+	possibleSynonyms := tempSplit[1]
+	length := len(possibleSynonyms)
+
+	if !strings.Contains(possibleSynonyms, "true,false") {
+		sStrings := strings.Replace(possibleSynonyms[:length-3], "\"", "", -1)
+
+		extraMeanings = strings.Split(sStrings, ",")
+	}
+
 	return
-}
-
-func getTranslation(response []byte, i1 []int, i2 []int) string {
-	pos1 := i1[2] + 1
-	pos2 := i2[0]
-
-	arry := strings.Split(string(response[pos1:pos2]), "\",\"")
-	return strings.Replace(arry[0], "\"", "", -1)
 }
