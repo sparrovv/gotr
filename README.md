@@ -1,10 +1,10 @@
 # gotr
 
-Hacky way to access **google translate** from the command line.  (Written in `go` for the speed)
+Not officially supported way to access **google translate** from the command line. (Written in `go` for the speed and distribution ease)
 
 **It can break at any point, so use it with caution.**
 
-Said that, it has been working stable for couple months now. (date of publication: 06/01/2014)
+Said that, it has been working stable since the first release. (date of publication: 2014-01-06)
 
 ### How to use it:
 
@@ -14,16 +14,52 @@ dwuznaczny
 dwuznaczny, wymijający, podejrzany
 ```
 
-To get a list of avaliable languages' codes run:
+#### Speech synthesis
+
+**-s** flag enables speech synthesis
+
+```
+$ gotr -s --from=en --to=pl equivocal
+dwuznaczny
+dwuznaczny, wymijający, podejrzany
+```
+
+If you need only speech, specify --to flag as same as --from.
+
+```
+$ gotr -s --from=en --to=en equivocal
+equivocal
+```
+
+#### List available languages
+
+To get a list of available languages' codes run:
+
 ```
 $ gotr --list
 ```
 
-Passing the `--from` and `--to` is a bit cumbersome so I recommend creating aliases for your default languages:
+#### TIP
+
+Passing the `--from` and `--to` is cumbersome, and usually we only need translation for one language.
+To ease up this dull task of specifying options, you can create aliases for your default languages:
 
 `alias ep="gotr --from=en --to=pl"`
 
 `alias pe="gotr --from=pl --to=en"`
 
+`alias gees="gotr --from=en --to=en -s"`
+
 You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
 
+### Requirements
+
+To use speech on OSX you need afplayer.
+
+### Other similar projects:
+
+- https://github.com/pawurb/termit
+
+### TODOS:
+
+- [ ] enable speech on Linux systems.

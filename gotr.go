@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/codegangsta/cli"
@@ -18,7 +19,7 @@ func main() {
 		cli.StringFlag{"from, f", "", "translate from"},
 		cli.StringFlag{"to, t", "", "translate to"},
 		cli.BoolFlag{"list, l", "list of languages"},
-		cli.BoolFlag{"speech, s", "download and execute run audio file"},
+		cli.BoolFlag{"speech, s", "plays pronunciation in both languages"},
 	}
 	app.Action = func(c *cli.Context) {
 		from := strings.TrimSpace(c.String("from"))
@@ -46,12 +47,13 @@ func main() {
 		fmt.Println(strings.Join(phrase.ExtraMeanings, ", "))
 
 		if c.Bool("speech") == true {
-			path := "/tmp/gotr.speech.file.mpg"
-			err := googletranslate.FetchSoundFile(to, phrase.Translation, path)
+			translateToPath := "/tmp/gotr.speech.file.to.mpg"
+
+			err := googletranslate.FetchSoundFile(to, phrase.Translation, translateToPath)
 			if err == nil {
-				fmt.Println("\nSpeech support on OSX:")
-				fmt.Println("afplay " + path)
+				playSound(translateToPath)
 			}
+
 		}
 
 	}
@@ -63,4 +65,13 @@ func usage() string {
     gotr --from=en to=pl phrase
     gotr --list - returns list of available languages
   `
+}
+
+func playSound(path string) {
+	cmd := exec.Command("sh", "-l", "-c", "afplay "+path)
+	_, err := cmd.Output()
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
 }
