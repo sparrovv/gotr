@@ -24,14 +24,14 @@ dwuznaczny
 dwuznaczny, wymijający, podejrzany
 ```
 
-If you need only speech, specify --to flag as same as --from.
+If you need only speech, specify --to flag to be same as --from.
 
 ```
 $ gotr -s --from=en --to=en equivocal
 equivocal
 ```
 
-#### List available languages
+#### Available languages
 
 To get a list of available languages' codes run:
 
@@ -54,7 +54,7 @@ You can download binaries from [releases](https://github.com/sparrovv/gotr/relea
 
 ### Requirements
 
-To use speech on OSX you need afplayer.
+To use speech on OSX you need **afplay**.
 
 ### Other similar projects:
 
@@ -62,4 +62,6 @@ To use speech on OSX you need afplayer.
 
 ### TODOS:
 
-- [ ] enable speech on Linux systems.
+- [ ] enable speech on Linux.
+- [ ] add timeout in case of the Network issues
+- [ ] add brew formula
