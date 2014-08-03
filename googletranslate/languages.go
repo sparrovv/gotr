@@ -92,7 +92,7 @@ func ListLanguages() string {
 	return langs
 }
 
-func inLangList(code string) bool {
+func isInLangList(code string) bool {
 	for _, lang := range languages {
 		if lang.Code == code {
 			return true

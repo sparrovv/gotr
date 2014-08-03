@@ -6,9 +6,7 @@ import (
 	"log"
 )
 
-const (
-	speechURL = "https://translate.google.com/translate_tts"
-)
+const speechURL = "https://translate.google.com/translate_tts"
 
 func FetchSoundFile(lang string, text string, audioPath string) (err error) {
 	return fetchSoundFile(speechURL, lang, text, audioPath)

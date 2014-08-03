@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const urlAddress = "https://translate.google.com/translate_a/t"
+const translateURL = "https://translate.google.com/translate_a/t"
 
 type Phrase struct {
 	Translation   string   `json:"translation"`
@@ -18,19 +18,19 @@ func Translate(from string, to string, term string) (phrase Phrase, err error) {
 	argError := func(code string) error {
 		return fmt.Errorf("Unknown language code: %v. Check the list of available codes", code)
 	}
-	if inLangList(from) == false {
+	if isInLangList(from) == false {
 		err = argError(from)
 		return
 	}
-	if inLangList(to) == false {
+	if isInLangList(to) == false {
 		err = argError(to)
 		return
 	}
 
-	return translate(urlAddress, from, to, term)
+	return translate(translateURL, from, to, term)
 }
 
-func translate(urlAddress string, from string, to string, term string) (phrase Phrase, err error) {
+func translate(translateURL string, from string, to string, term string) (phrase Phrase, err error) {
 	params := map[string]string{
 		"client":   "t",
 		"hl":       "en",
@@ -44,7 +44,7 @@ func translate(urlAddress string, from string, to string, term string) (phrase P
 		"text":     term,
 	}
 
-	resp, err := runRquest(urlAddress, params)
+	resp, err := runRquest(translateURL, params)
 	if err != nil {
 		err = fmt.Errorf("Error fetching translation: [%v]", err)
 		return
