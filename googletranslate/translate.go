@@ -77,7 +77,7 @@ func getExtraMeanings(response string) (extraMeanings []string) {
 	possibleSynonyms := tempSplit[1]
 	length := len(possibleSynonyms)
 
-	if !strings.Contains(possibleSynonyms, "true,false") {
+	if !strings.Contains(possibleSynonyms, "true,false") && !strings.Contains(possibleSynonyms, "false,false") {
 		sStrings := strings.Replace(possibleSynonyms[:length-3], "\"", "", -1)
 
 		extraMeanings = strings.Split(sStrings, ",")
