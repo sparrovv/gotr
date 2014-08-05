@@ -6,49 +6,53 @@ Not officially supported way to access **google translate** from the command lin
 
 Said that, it has been working stable since the first release. (date of publication: 2014-01-06)
 
-### How to use it:
 
 ```
-$ gotr --from=en --to=pl equivocal
+Usage:
+  gotr <from> <to> <phrase>
+  gotr [-s] <from> <to> <phrase>
+  gotr (-h | --help)
+  gotr (-l | --list)
+
+Options:
+  -h, --help     Show help
+  -l, --list     List available languages
+  -s, --speech   Enable speech synthesis
+```
+
+### Examples
+
+```
+$ gotr en pl equivocal
 dwuznaczny
 dwuznaczny, wymijający, podejrzany
+```
+
+```
+$ gotr en zh "May the force be with you"
+愿原力与你同在
 ```
 
 #### Speech synthesis
 
 **-s** flag enables speech synthesis
 
-```
-$ gotr -s --from=en --to=pl equivocal
-dwuznaczny
-dwuznaczny, wymijający, podejrzany
-```
-
-If you need only speech, specify --to flag to be same as --from.
+To check only the pronunciation, without translation, specify <to> to be same as <from>.
+(Not all languages support speech though)
 
 ```
-$ gotr -s --from=en --to=en equivocal
-equivocal
-```
-
-#### Available languages
-
-To get a list of available languages' codes run:
-
-```
-$ gotr --list
+$ gotr -s en en obstreperous
+obstreperous
 ```
 
 #### TIP
 
-Passing the `--from` and `--to` is cumbersome, and usually we only need translation for one language.
-To ease up this dull task of specifying options, you can create aliases for your default languages:
+Passing the `<from>` and `<to>` might be cumbersome, and usually we need translation for one language.
+To ease up this dull task of passing <from> and <to>, you can consider creating aliases for your default languages:
 
-`alias ep="gotr --from=en --to=pl"`
-
-`alias pe="gotr --from=pl --to=en"`
-
-`alias gees="gotr --from=en --to=en -s"`
+`alias ep="gotr en pl"`
+`alias pe="gotr pl en"`
+`alias gees="gotr en en -s"`
 
 You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
 
