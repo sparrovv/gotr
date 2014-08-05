@@ -58,7 +58,7 @@ You can download binaries from [releases](https://github.com/sparrovv/gotr/relea
 
 ### Requirements
 
-To use speech on OSX you need **afplay**.
+To play audio from command line, install **afplay**(OSX) or **mpg123**.
 
 ### Other similar projects:
 
@@ -66,6 +66,4 @@ To use speech on OSX you need **afplay**.
 
 ### TODOS:
 
-- [ ] enable speech on Linux.
 - [ ] add timeout in case of the Network issues
-- [ ] add brew formula

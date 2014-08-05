@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"strings"
 
 	"github.com/docopt/docopt-go"
@@ -64,11 +63,19 @@ func main() {
 	}
 }
 
+var audioPlayers []Player = []Player{
+	Player{Name: "afplay"},
+	Player{Name: "mpg123"},
+}
+
 func playSound(path string) {
-	cmd := exec.Command("sh", "-l", "-c", "afplay "+path)
-	_, err := cmd.Output()
-	if err != nil {
-		log.Fatal(err)
-		os.Exit(1)
+	for _, player := range audioPlayers {
+		_, err := player.Play(path)
+		if err == nil {
+			return
+		}
 	}
+
+	fmt.Println("Can't find compatible audio player")
+	os.Exit(1)
 }
