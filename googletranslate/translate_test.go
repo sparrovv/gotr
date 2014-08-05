@@ -9,9 +9,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func buildTestServer(response string) *httptest.Server {
+func buildTestServer(response string, status int) *httptest.Server {
 	var fetchHandler = func(rw http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
+		rw.WriteHeader(status)
 		fmt.Fprintf(rw, response)
 	}
 
@@ -30,7 +31,7 @@ var googleTranslateResponse = `
 `
 
 func TestTranslateWithSimpleResponse(t *testing.T) {
-	server := buildTestServer(googleTranslateResponse)
+	server := buildTestServer(googleTranslateResponse, http.StatusOK)
 	defer server.Close()
 
 	phrase, err := translate(server.URL, "en", "pl", "lay down")
@@ -45,7 +46,7 @@ var googleTranslateResponseWithSentence = `
 `
 
 func TestTranslateWithFullSentenceResponse(t *testing.T) {
-	server := buildTestServer(googleTranslateResponseWithSentence)
+	server := buildTestServer(googleTranslateResponseWithSentence, http.StatusOK)
 	defer server.Close()
 
 	phrase, err := translate(server.URL, "pl", "en", "Dlatego też warto testować, bo inaczej")
@@ -59,7 +60,7 @@ var googleTranslateResponseWithSentence2 = `
 [[["愿原力与你同在","May the Force be with you","Yuàn yuán lì yǔ nǐ tóng zài",""]],,"en",,[["愿原力",[1],false,false,982,0,3,0],["与你同在",[2],false,false,981,3,7,0]],[["May the Force",1,[["愿原力",982,false,false],["可能的力量",0,false,false],["源原力",0,false,false],["原力",0,false,false],["愿力量",0,false,false]],[[0,13]],"May the Force be with you"],["be with you",2,[["与你同在",981,false,false],["与你同",0,false,false],["与你",0,false,false],["和你在一起",0,false,false],["和你",0,false,false]],[[14,25]],""]],,,[["en"]],3]`
 
 func TestTranslateWithFullSentenceResponse2(t *testing.T) {
-	server := buildTestServer(googleTranslateResponseWithSentence2)
+	server := buildTestServer(googleTranslateResponseWithSentence2, http.StatusOK)
 	defer server.Close()
 
 	phrase, err := translate(server.URL, "en", "zh", "May the Force be with you")
@@ -74,7 +75,7 @@ var sameLanguageResponse = `
 `
 
 func TestTranslateWithTheSameLanguage(t *testing.T) {
-	server := buildTestServer(sameLanguageResponse)
+	server := buildTestServer(sameLanguageResponse, http.StatusOK)
 	defer server.Close()
 
 	phrase, err := translate(server.URL, "en", "en", "elusive")

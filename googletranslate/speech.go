@@ -1,9 +1,11 @@
 package googletranslate
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 )
 
 const speechURL = "https://translate.google.com/translate_tts"
@@ -23,6 +25,10 @@ func fetchSoundFile(url string, lang string, text string, audioPath string) (err
 	resp, err := runRquest(url, params)
 	if err != nil {
 		err = fmt.Errorf("Error fetching translation: [%v]", err)
+		return
+	}
+	if resp.StatusCode == http.StatusNotFound {
+		err = errors.New("Speech synthesis is not supported for this language: " + lang)
 		return
 	}
 
