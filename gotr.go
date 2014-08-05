@@ -11,6 +11,8 @@ import (
 	"github.com/sparrovv/gotr/googletranslate"
 )
 
+const translateToPath string = "/tmp/gotr.speech.file.to.mpg"
+
 var usage string = `google translate in terminal
 
 Usage:
@@ -53,15 +55,13 @@ func main() {
 	fmt.Println(strings.Join(phrase.ExtraMeanings, ", "))
 
 	if args["--speech"].(bool) == true {
-		translateToPath := "/tmp/gotr.speech.file.to.mpg"
-
 		err := googletranslate.FetchSoundFile(to, phrase.Translation, translateToPath)
 		if err == nil {
 			playSound(translateToPath)
+		} else {
+			fmt.Println(err)
 		}
-
 	}
-
 }
 
 func playSound(path string) {
