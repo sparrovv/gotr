@@ -10,7 +10,7 @@ Said that, it has been working stable since the first release. (date of publicat
 ```
 Usage:
   gotr <from> <to> <phrase>
-  gotr [-s] <from> <to> <phrase>
+  gotr [-sp] <from> <to> <phrase>
   gotr (-h | --help)
   gotr (-l | --list)
 
@@ -18,6 +18,7 @@ Options:
   -h, --help     Show help
   -l, --list     List available languages
   -s, --speech   Enable speech synthesis
+  -p, --persist  Persist query into ~/.gotr_history
 ```
 
 ### Examples
@@ -50,9 +51,9 @@ obstreperous
 Passing the `<from>` and `<to>` might be cumbersome, and usually we need translation for one language.
 To ease up this dull task of passing <from> and <to>, you can consider creating aliases for your default languages:
 
-`alias ep="gotr en pl"`
-`alias pe="gotr pl en"`
-`alias gees="gotr en en -s"`
+`alias ep="gotr -p en pl"`
+`alias pe="gotr -p pl en"`
+`alias gees="gotr -p en en -s"`
 
 You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
 
