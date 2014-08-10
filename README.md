@@ -48,7 +48,7 @@ obstreperous
 
 #### TIP
 
-Passing the `<from>` and `<to>` might be cumbersome, and usually we need translation for one language.
+Passing the `<from>` and `<to>` might be cumbersome.
 To ease up this dull task of passing <from> and <to>, you can consider creating aliases for your default languages:
 
 `alias ep="gotr -p en pl"`
