@@ -38,7 +38,7 @@ $ gotr en zh "May the force be with you"
 
 **-s** flag enables speech synthesis
 
-To check only the pronunciation, without translation, specify <to> to be same as <from>.
+To check only the pronunciation, without translation, specify `<to>` to be same as `<from>`.
 (Not all languages support speech though)
 
 ```
