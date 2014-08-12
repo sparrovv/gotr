@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -34,4 +35,21 @@ func AddToHistory(logPath string, lr LogRecord) {
 	}
 
 	l.Println(string(b))
+}
+
+func ReadHistory(logPath string) (history string) {
+	f, err := os.Open(logPath)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		history += scanner.Text() + ","
+	}
+
+	history = "[" + history[:len(history)-1] + "]"
+
+	return
 }

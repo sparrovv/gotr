@@ -57,3 +57,22 @@ func TestAddingToHisotory(t *testing.T) {
 		t.Errorf("Expected that Date field is properly stored, but got", obj.Date)
 	}
 }
+
+func TestReadHistory(t *testing.T) {
+	historyFile, err := ioutil.TempFile("", "")
+	if err != nil {
+		panic(err)
+	}
+	defer os.Remove(historyFile.Name())
+
+	serialisedJSON := "{'field':'fooo'}\n{'field':'bar'}"
+	expectedJSON := "[{'field':'fooo'},{'field':'bar'}]"
+	err = ioutil.WriteFile(historyFile.Name(), []byte(serialisedJSON), 0644)
+	if err != nil {
+		panic(err)
+	}
+
+	if actual := ReadHistory(historyFile.Name()); actual != expectedJSON {
+		t.Error("Expected history content to be equal", expectedJSON, ", but got:", actual)
+	}
+}

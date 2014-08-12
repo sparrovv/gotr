@@ -11,6 +11,7 @@ import (
 )
 
 const translateToPath string = "/tmp/gotr.speech.file.to.mpg"
+const historyFileName string = ".gotr_history"
 
 var audioPlayers []Player = []Player{
 	Player{Name: "afplay"},
@@ -30,10 +31,15 @@ func playSound(path string) {
 }
 
 func Run(args map[string]interface{}, usage string) {
-	if args["--list"].(bool) == true {
+	if args["--list"] != nil && args["--list"].(bool) == true {
 		fmt.Println(`Supported languages:`)
 		fmt.Println(googletranslate.ListLanguages())
 		os.Exit(1)
+	}
+
+	if args["--history"].(bool) == true {
+		fmt.Println(ReadHistory(historyPath()))
+		os.Exit(0)
 	}
 
 	from := args["<from>"].(string)
@@ -52,7 +58,9 @@ func Run(args map[string]interface{}, usage string) {
 	}
 
 	fmt.Println(phrase.Translation)
-	fmt.Println(strings.Join(phrase.ExtraMeanings, ", "))
+	if len(phrase.ExtraMeanings) > 0 {
+		fmt.Println(strings.Join(phrase.ExtraMeanings, ", "))
+	}
 
 	if args["--speech"].(bool) == true {
 		err := googletranslate.FetchSoundFile(to, phrase.Translation, translateToPath)
@@ -63,9 +71,8 @@ func Run(args map[string]interface{}, usage string) {
 		}
 	}
 
-	if args["--persist"].(bool) == true {
-		historyPath := homeDir() + "/.gotr_history"
-		AddToHistory(historyPath, LogRecord{
+	if args["--log"].(bool) == true {
+		AddToHistory(historyPath(), LogRecord{
 			From:          from,
 			To:            to,
 			Phrase:        term,
@@ -75,10 +82,10 @@ func Run(args map[string]interface{}, usage string) {
 	}
 }
 
-func homeDir() string {
+func historyPath() string {
 	usr, err := user.Current()
 	if err != nil {
 		log.Fatal(err)
 	}
-	return usr.HomeDir
+	return usr.HomeDir + "/" + historyFileName
 }
