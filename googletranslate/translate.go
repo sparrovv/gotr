@@ -68,8 +68,12 @@ func getTranslation(response string) string {
 }
 
 func getExtraMeanings(response string) (extraMeanings []string) {
-	tempSplit := strings.Split(strings.Split(response, "[[")[2], "[")
+	dblSquareBracketSplit := strings.Split(response, "[[")
+	if len(dblSquareBracketSplit) < 3 {
+		return
+	}
 
+	tempSplit := strings.Split(dblSquareBracketSplit[2], "[")
 	if len(tempSplit) <= 1 {
 		return
 	}

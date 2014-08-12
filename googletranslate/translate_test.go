@@ -54,6 +54,7 @@ var testExamples = []struct {
 	{"Dlatego też warto testować, bo inaczej", "pl", "en", googleTranslateResponseWithSentence, "Therefore, it is worth testing , because otherwise", emptyExtraMeanings},
 	{"May the Force be with you", "en", "zh", anotherGoogleTranslateResposneWithSentence, "愿原力与你同在", emptyExtraMeanings},
 	{"elusive", "en", "en", samgeToAndFromLanguageGoogleTranslateResponse, "elusive", emptyExtraMeanings},
+	{"a", "en", "pl", `[[["a","a","",""]],,"en",,,,,,,3]`, "a", emptyExtraMeanings},
 }
 
 func TestTranslation(t *testing.T) {
