@@ -1,10 +1,10 @@
 # gotr
 
-Not officially supported way to access **google translate** from the command line. (Written in `go` for the speed and distribution ease)
+Not officially supported way to access **google translate** from the command line. (Written in `go` for speed and distribution ease)
 
-**It can break at any point, so use it with caution.**
+**It can break at any point, so don't use it on the production**
 
-Said that, it has been working stable since the first release. (date of publication: 2014-01-06)
+Said that, it has been working stable since the first release (2014-01-06).
 
 ```
 Usage:
