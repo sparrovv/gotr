@@ -53,7 +53,9 @@ Passing the `<from>` and `<to>` might be cumbersome.
 To ease up this dull task of passing `<from>` and `<to>`, you can consider creating aliases for your default languages:
 
 `alias ep="gotr -l en pl"`
+
 `alias pe="gotr -l pl en"`
+
 `alias gees="gotr -l en en -s"`
 
 You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
@@ -65,3 +67,4 @@ To play audio from command line, install **afplay**(OSX) or **mpg123**.
 ### Other similar projects:
 
 - https://github.com/pawurb/termit
+
