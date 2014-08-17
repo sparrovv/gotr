@@ -3,7 +3,11 @@ package googletranslate
 import (
 	"net/http"
 	"net/url"
+	"time"
 )
+
+// Default client timetout value to all google requests
+var clientTimeout = time.Duration(10 * time.Second)
 
 func runRquest(urlString string, params map[string]string) (resp *http.Response, err error) {
 	urlObj, err := url.Parse(urlString)
@@ -22,5 +26,9 @@ func runRquest(urlString string, params map[string]string) (resp *http.Response,
 
 	req.Header.Add("User-Agent", "Mozilla/5.0")
 
-	return http.DefaultClient.Do(req)
+	client := http.Client{
+		Timeout: clientTimeout,
+	}
+
+	return client.Do(req)
 }

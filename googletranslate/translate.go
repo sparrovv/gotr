@@ -3,7 +3,6 @@ package googletranslate
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"strings"
 )
 
@@ -52,7 +51,7 @@ func translate(translateURL string, from string, to string, term string) (phrase
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 	defer resp.Body.Close()
 

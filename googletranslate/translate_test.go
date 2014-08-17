@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -67,5 +68,23 @@ func TestTranslation(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, phrase.Translation, testExample.translation)
 		assert.Equal(t, phrase.ExtraMeanings, testExample.extraMeanings)
+	}
+}
+
+func TestTimeout(t *testing.T) {
+	// override default client Timeout
+	clientTimeout = time.Duration(100 * time.Millisecond)
+
+	var fetchHandler = func(rw http.ResponseWriter, r *http.Request) {
+		time.Sleep(5 * time.Second)
+		r.ParseForm()
+		fmt.Fprintf(rw, googleTranslateResponse)
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(fetchHandler))
+	_, err := translate(server.URL, "pl", "en", "cześć")
+
+	if err == nil {
+		t.Error("Expected error, got but nothing was raised")
 	}
 }
