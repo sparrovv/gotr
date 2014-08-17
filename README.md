@@ -58,7 +58,16 @@ To ease up this dull task of passing `<from>` and `<to>`, you can consider creat
 
 `alias gees="gotr -l en en -s"`
 
+### How to install
+
 You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
+
+#### Homebrew
+
+```
+brew tap sparrovv/tap
+brew install gotr
+```
 
 ### Requirements
 
