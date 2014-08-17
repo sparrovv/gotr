@@ -6,7 +6,6 @@ Not officially supported way to access **google translate** from the command lin
 
 Said that, it has been working stable since the first release. (date of publication: 2014-01-06)
 
-
 ```
 Usage:
   gotr <from> <to> <phrase>
@@ -51,7 +50,7 @@ obstreperous
 #### TIP
 
 Passing the `<from>` and `<to>` might be cumbersome.
-To ease up this dull task of passing <from> and <to>, you can consider creating aliases for your default languages:
+To ease up this dull task of passing `<from>` and `<to>`, you can consider creating aliases for your default languages:
 
 `alias ep="gotr -l en pl"`
 `alias pe="gotr -l pl en"`
@@ -66,7 +65,3 @@ To play audio from command line, install **afplay**(OSX) or **mpg123**.
 ### Other similar projects:
 
 - https://github.com/pawurb/termit
-
-### TODOS:
-
-- [ ] add timeout in case of the Network issues
