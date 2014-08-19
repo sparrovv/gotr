@@ -1,10 +1,11 @@
 # gotr
 
-Not officially supported way to access **google translate** from the command line. (Written in `go` for speed and distribution ease)
+**Google translate** in the command line.
 
-**It can break at any point, so don't use it on the production**
+Disclaimer:
 
-Said that, it has been working stable since the first release (2014-01-06).
+This is not officially supported way to access Google Translate. **It can break at any time, so don't use it in the production systems**. (Said that, it has been working stable since the first release: 2014-01-06.)
+
 
 ```
 Usage:
@@ -22,6 +23,17 @@ Options:
   --history     Print log history in JSON to the SDTOUT
 ```
 
+### How to install
+
+You can download binaries from [releases](https://github.com/sparrovv/gotr/releases).
+
+#### Homebrew
+
+```
+brew tap sparrovv/tap
+brew install gotr
+```
+
 ### Examples
 
 ```
@@ -37,20 +49,19 @@ $ gotr en zh "May the force be with you"
 
 #### Speech synthesis
 
-**-s** flag enables speech synthesis
+Unfortunately it's not available to all languages and some less popular ones don't have it yet.
 
-To check only the pronunciation, without translation, specify `<to>` to be same as `<from>`.
-(Not all languages support speech though)
+#### Tips
+
+- To only check the pronunciation, specify `<to>` to be same as `<from>`.
 
 ```
 $ gotr -s en en obstreperous
 obstreperous
 ```
 
-#### TIP
-
-Passing the `<from>` and `<to>` might be cumbersome.
-To ease up this dull task of passing `<from>` and `<to>`, you can consider creating aliases for your default languages:
+- Passing `<from>` and `<to>` might be cumbersome.
+You might consider creating aliases for your default languages:
 
 `alias ep="gotr -l en pl"`
 
@@ -58,22 +69,10 @@ To ease up this dull task of passing `<from>` and `<to>`, you can consider creat
 
 `alias gees="gotr -l en en -s"`
 
-### How to install
-
-You can download binaries from [releases](https://github.com/sparrovv/gotr/releases)
-
-#### Homebrew
-
-```
-brew tap sparrovv/tap
-brew install gotr
-```
-
 ### Requirements
 
-To play audio from command line, install **afplay**(OSX) or **mpg123**.
+To play audio, install **afplay**(OSX) or **mpg123**.
 
 ### Other similar projects:
 
-- https://github.com/pawurb/termit
-
+- https://github.com/pawurb/termit (written in ruby)
