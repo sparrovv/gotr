@@ -4,7 +4,7 @@
 
 Disclaimer:
 
-This is not officially supported way to access Google Translate. **It can break at any time, so don't use it in the production systems**. (Said that, it has been working stable since the first release: 2014-01-06.)
+This is not an officially supported way of accessing Google Translate. **It can break at any time, so don't use it on production systems**. (That said, it has been stable since the first release: 2014-01-06.)
 
 
 ```
