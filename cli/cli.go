@@ -45,6 +45,7 @@ func Run(args map[string]interface{}, usage string) {
 	from := args["<from>"].(string)
 	to := args["<to>"].(string)
 	term := args["<phrase>"].(string)
+	showExtraMeanings := !args["--ignore"].(bool)
 
 	if len(from) == 0 || len(to) == 0 || len(term) == 0 {
 		fmt.Println("  Usage: " + usage)
@@ -58,7 +59,7 @@ func Run(args map[string]interface{}, usage string) {
 	}
 
 	fmt.Println(phrase.Translation)
-	if len(phrase.ExtraMeanings) > 0 {
+	if showExtraMeanings && len(phrase.ExtraMeanings) > 0 {
 		fmt.Println(strings.Join(phrase.ExtraMeanings, ", "))
 	}
 

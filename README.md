@@ -10,7 +10,7 @@ This is not officially supported way to access Google Translate. **It can break 
 ```
 Usage:
   gotr <from> <to> <phrase>
-  gotr [-l] [-s] <from> <to> <phrase>
+  gotr [-l] [-s] [-i] <from> <to> <phrase>
   gotr -h | --help
   gotr --history
   gotr --list
@@ -19,6 +19,7 @@ Options:
   -h, --help    Show help
   -s, --speech  Enable speech synthesis
   -l, --log     Log query into ~/.gotr_history
+  -i, --ignore  Ignore extra meanings
   --list        List available languages
   --history     Print log history in JSON to the SDTOUT
 ```
