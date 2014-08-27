@@ -34,7 +34,7 @@ func Run(args map[string]interface{}, usage string) {
 	if args["--list"] != nil && args["--list"].(bool) == true {
 		fmt.Println(`Supported languages:`)
 		fmt.Println(googletranslate.ListLanguages())
-		os.Exit(1)
+		os.Exit(0)
 	}
 
 	if args["--history"].(bool) == true {
