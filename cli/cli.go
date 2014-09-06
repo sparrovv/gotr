@@ -38,7 +38,11 @@ func Run(args map[string]interface{}, usage string) {
 	}
 
 	if args["--history"].(bool) == true {
-		fmt.Println(ReadHistory(historyPath()))
+		if contents, err := ReadHistory(historyPath()); err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Println(contents)
+		}
 		os.Exit(0)
 	}
 

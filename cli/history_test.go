@@ -72,7 +72,15 @@ func TestReadHistory(t *testing.T) {
 		panic(err)
 	}
 
-	if actual := ReadHistory(historyFile.Name()); actual != expectedJSON {
+	if actual, _ := ReadHistory(historyFile.Name()); actual != expectedJSON {
 		t.Error("Expected history content to be equal", expectedJSON, ", but got:", actual)
+	}
+}
+
+func TestReadHistoryWhenFileDoesntExists(t *testing.T) {
+	_, err := ReadHistory("./foobarbizberdoesntexist")
+
+	if err == nil {
+		t.Error("Expected to return err, but got nothing")
 	}
 }

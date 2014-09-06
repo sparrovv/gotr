@@ -3,6 +3,7 @@ package cli
 import (
 	"bufio"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -37,10 +38,10 @@ func AddToHistory(logPath string, lr LogRecord) {
 	l.Println(string(b))
 }
 
-func ReadHistory(logPath string) (history string) {
+func ReadHistory(logPath string) (history string, err error) {
 	f, err := os.Open(logPath)
 	if err != nil {
-		panic(err)
+		return history, errors.New("History file doesn't exists")
 	}
 	defer f.Close()
 
