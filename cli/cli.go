@@ -76,7 +76,7 @@ func Run(args map[string]interface{}, usage string) {
 		}
 	}
 
-	if args["--log"].(bool) == true {
+	if args["--disablelog"].(bool) == true {
 		AddToHistory(historyPath(), LogRecord{
 			From:          from,
 			To:            to,
