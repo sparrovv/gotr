@@ -18,6 +18,12 @@ tag:
 	git commit -m "Release: v$(VERSION)"
 	git tag v$(VERSION)
 
+# quick way to check if it really works
+integration_test: build
+	./gotr en en foo > test.file
+	test $$(cat test.file) = 'foo'
+	rm test.file
+
 build_all:
 	mkdir -p bin
 	@for goos in linux windows darwin ; do \
