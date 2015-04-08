@@ -21,7 +21,7 @@ func runRquest(urlString string, params map[string]string) (resp *http.Response,
 
 	urlObj.RawQuery = v.Encode()
 
-	req, err := http.NewRequest("GET", urlObj.String(), nil)
+	req, err := http.NewRequest("POST", urlObj.String(), nil)
 	check(err)
 
 	req.Header.Add("User-Agent", "Mozilla/5.0")
