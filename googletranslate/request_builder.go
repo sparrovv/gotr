@@ -6,25 +6,31 @@ import (
 	"time"
 )
 
-// Default client timetout value to all google requests
+// Default client timetout to all google requests
 var clientTimeout = time.Duration(10 * time.Second)
 
-func runRquest(urlString string, params map[string]string) (resp *http.Response, err error) {
+func runRquest(urlString string, standardParams map[string]string, multipleParams map[string][]string) (resp *http.Response, err error) {
 	urlObj, err := url.Parse(urlString)
 	check(err)
 
-	v := url.Values{}
+	queryString := url.Values{}
 
-	for key, value := range params {
-		v.Set(key, value)
+	for key, value := range standardParams {
+		queryString.Set(key, value)
 	}
 
-	urlObj.RawQuery = v.Encode()
+	for key, values := range multipleParams {
+		for _, value := range values {
+			queryString.Add(key, value)
+		}
+	}
+
+	urlObj.RawQuery = queryString.Encode()
 
 	req, err := http.NewRequest("POST", urlObj.String(), nil)
 	check(err)
 
-	req.Header.Add("User-Agent", "Mozilla/5.0")
+	req.Header.Add("User-Agent", "Mozilla/5.0 (X11; OpenBSD i386) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36")
 
 	client := http.Client{
 		Timeout: clientTimeout,

@@ -22,13 +22,20 @@ func fetchSoundFile(url string, lang string, text string, audioPath string) (err
 		"oe":   "UTF-8",
 	}
 
-	resp, err := runRquest(url, params)
+	multipleParams := map[string][]string{} // emtpy
+
+	resp, err := runRquest(url, params, multipleParams)
 	if err != nil {
 		err = fmt.Errorf("Error fetching translation: [%v]", err)
 		return
 	}
 	if resp.StatusCode == http.StatusNotFound {
 		err = errors.New("Speech synthesis is not supported for this language: " + lang)
+		return
+	}
+
+	if resp.StatusCode == http.StatusServiceUnavailable {
+		err = errors.New("Google has detetect an invalid request... Sorry :/")
 		return
 	}
 

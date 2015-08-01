@@ -28,3 +28,11 @@ func TestFetchSoundFileWhen404(t *testing.T) {
 	err := fetchSoundFile(server.URL, "en", "lay down", "/tmp/gotr.test.mpg")
 	assert.Equal(t, err.Error(), "Speech synthesis is not supported for this language: en")
 }
+
+func TestFetchSoundFileWhen503(t *testing.T) {
+	server := buildTestServer(audioResponse, http.StatusServiceUnavailable)
+	defer server.Close()
+
+	err := fetchSoundFile(server.URL, "en", "lay down", "/tmp/gotr.test.mpg")
+	assert.Equal(t, err.Error(), "Google has detetect an invalid request... Sorry :/")
+}
