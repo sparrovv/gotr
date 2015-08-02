@@ -29,7 +29,7 @@ build_all:
 	@for goos in linux windows darwin ; do \
 		for goarch in amd64 386; do \
 			echo "building bin/gotr_$$goos-$$goarch"; \
-			GO_ENABLED=0 GOOS=$$goos GOARCH=$$goarch go build -o "./bin/gotr_$$goos-$$goarch" gotr.go; \
+			GOOS=$$goos GOARCH=$$goarch go build -o "./bin/gotr_$$goos-$$goarch" gotr.go; \
 		done; \
 	done
 
