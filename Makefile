@@ -36,4 +36,4 @@ build_all:
 homebrew:
 	mkdir -p bin/bin
 	cp bin/gotr_darwin-amd64 bin/gotr
-	tar -czvf "gotr-v$(VERSION).tar.gz" bin/gotr README.md
+	tar -czvf "gotr-v$(VERSION).tar.gz" bin/gotr README.md CHANGELOG.md
