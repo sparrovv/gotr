@@ -9,7 +9,7 @@ import (
 // Default client timetout to all google requests
 var clientTimeout = time.Duration(10 * time.Second)
 
-func runRquest(urlString string, standardParams map[string]string, multipleParams map[string][]string) (resp *http.Response, err error) {
+func runRquest(urlString string, standardParams map[string]string, multipleValuesParams map[string][]string) (resp *http.Response, err error) {
 	urlObj, err := url.Parse(urlString)
 	check(err)
 
@@ -19,7 +19,7 @@ func runRquest(urlString string, standardParams map[string]string, multipleParam
 		queryString.Set(key, value)
 	}
 
-	for key, values := range multipleParams {
+	for key, values := range multipleValuesParams {
 		for _, value := range values {
 			queryString.Add(key, value)
 		}

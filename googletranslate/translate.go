@@ -31,7 +31,7 @@ func Translate(from string, to string, term string) (phrase Phrase, err error) {
 }
 
 func translate(translateURL string, from string, to string, term string) (phrase Phrase, err error) {
-	params := map[string]string{
+	standardParams := map[string]string{
 		"client": "t",
 		"ie":     "UTF-8",
 		"oe":     "UTF-8",
@@ -45,11 +45,11 @@ func translate(translateURL string, from string, to string, term string) (phrase
 		"tsel":   "0",
 	}
 
-	multipleParams := map[string][]string{
+	multipleValuesParams := map[string][]string{
 		"dt": []string{"bd", "ex", "ld", "md", "qc", "rw", "rm", "ss", "t", "at"},
 	}
 
-	resp, err := runRquest(translateURL, params, multipleParams)
+	resp, err := runRquest(translateURL, standardParams, multipleValuesParams)
 	if err != nil {
 		err = fmt.Errorf("Error fetching translation: [%v]", err)
 		return
