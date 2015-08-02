@@ -27,6 +27,7 @@ func runRquest(urlString string, standardParams map[string]string, multipleValue
 
 	urlObj.RawQuery = queryString.Encode()
 
+	Debug("request: " + urlObj.String())
 	req, err := http.NewRequest("POST", urlObj.String(), nil)
 	check(err)
 
