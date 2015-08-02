@@ -50,6 +50,8 @@ $ gotr en zh "May the force be with you"
 
 #### Speech synthesis
 
+**Temporarly broken**
+
 Unfortunately it's not available to all languages and some less popular ones don't have it yet.
 
 #### Logging
