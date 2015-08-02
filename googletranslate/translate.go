@@ -62,8 +62,10 @@ func translate(translateURL string, from string, to string, term string) (phrase
 	defer resp.Body.Close()
 
 	phrase.Translation = getTranslation(string(body))
-	phrase.ExtraMeanings = getExtraMeanings(string(body))
-
+	// Get extra meanings only when "from" language is different than "to" language
+	if from != to {
+		phrase.ExtraMeanings = getExtraMeanings(string(body))
+	}
 	return
 }
 
